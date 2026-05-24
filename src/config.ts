@@ -8,10 +8,8 @@ export const SITE = {
 
 export const SOCIAL = {
   github: "https://github.com/ben-oxley",
-  twitter: "https://x.com/benoxley",
   mastodon: "https://hachyderm.io/@boxly",
   matrix: "https://matrix.to/#/@boxly:matrix.org",
-  instagram: "https://www.instagram.com/benoxley/",
   email: "hello@benoxley.com",
 };
 
