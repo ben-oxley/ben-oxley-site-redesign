@@ -1,75 +1,49 @@
 ---
-title: "Running Hermes Agent on Railway's Free Tier: A Disk-Space Adventure"
-date: 2026-05-24
-description: "What we learned trying to squeeze a modern AI agent into a 434 MB box — and the tricks that kept it running."
+title: "Running Hermes Agent on Railway's Free Tier: What Works and What Doesn't"
+pubDate: 2026-05-24
+description: "A practical look at running Hermes Agent on Railway's free tier — channel setup, model choices, storage limits, and where the $5 plan makes sense."
 tags: ["hermes-agent", "devops", "railway", "hosting", "ai-agents"]
 ---
 
-I've been running [Hermes Agent](https://hermes-agent.nousresearch.com) on Railway's free tier for a while now, and if there's one thing I've learned, it's this: **AI agents are hungry, and I don't just mean for tokens.**
+I've been running [Hermes Agent](https://hermes-agent.nousresearch.com) on Railway's free tier and it's been a positive experience overall. It's entirely possible to run a capable AI agent on a free instance, but there are some constraints worth knowing about upfront.
 
-## The 434MB Problem
+## Channel Setup
 
-Railway's free tier gives you a VM. That VM comes with a disk. That disk is, in our experience, **434 MB total**.
+**Telegram is by far the easiest integration.** It just works — set up a bot, plug in the token, and you're done. The UX for sending and receiving messages is smooth, and media attachments (images, audio, files) come through natively.
 
-To put that in perspective:
+Discord on the other hand gave me unexplained issues and unreliable behaviour. Nothing I could pin down to a specific config problem, just intermittent failures that made it frustrating to rely on day-to-day. If you're starting fresh, I'd recommend Telegram.
 
-- A modern Node.js project with `npm install` can easily consume 150–200 MB for `node_modules` alone
-- The npm cache adds another ~20 MB
-- Python venvs (for tools like ComfyUI or vLLM) can run 200–500 MB each
-- A single `git clone` of a moderately-sized repo is 10–50 MB
-- Logs, `.npm` caches, and temporary build artifacts pile up fast
+## Model Costs
 
-You can't `npm install` an Astro site and keep your Python environment at the same time. You can't run two significant codebases side-by-side. You can't even cache both npm and pip packages without watching `df -h` like a hawk.
+Most models get pricey quickly if you're running a conversational agent that makes frequent tool calls. A single complex task can burn through thousands of tokens in API calls, error handling, and retries.
 
-## Hard-Earned Workarounds
+That said, **DeepSeek Flash 4 has been really cost effective** — good reasoning capability for the price, and it's fast enough that the agent feels responsive. It's become my default for most day-to-day operations.
 
-### 1. Cache Rotation
+## The Real Constraint: Storage
 
-The biggest win was aggressively managing caches. Hermes uses `~/.npm` and pip caches, and they grow silently. We made a habit of:
+The main limit you hit on Railway's free tier is **storage** (around 434 MB). This is fine for the agent itself — Hermes is lightweight — but becomes an issue when your agent needs to `npm install`, clone repos, build projects, or work with multiple tools that have their own dependencies.
 
-```bash
-npm cache clean --force
-pip cache purge
-```
+Memory limits get hit occasionally too, especially when running Node.js builds or Python tools. This might have contributed to some of the unreliable behaviour I saw with Discord — hard to say for sure, but worth noting if you're planning heavy workloads.
 
-After cleaning `~/.npm` (which was 18 MB alone — not huge, but every megabyte counts), we went from 86% to 29% disk usage.
+## Avoid Heavy Dependency Chains
 
-### 2. Watch `df -h` Like It's Your Job
+The biggest practical tip is: **avoid solutions that need large chains of dependencies**, especially with npm. If your agent needs to build a static site, deploy a web app, or run a tool with deep dependency trees, you'll fill your disk fast.
 
-We built a habit of checking disk before any significant operation:
+Instead, push source code to GitHub and run builds in CI (GitHub Actions has generous free resources). The Railway instance becomes a thin control plane — perfect for orchestrating work that happens elsewhere.
 
-```
-/dev/zd1088   434M  365M   60M   86%
-```
+## Is the $5 Plan Worth It?
 
-Seeing that "86%" warning should trigger a cleanup, not a new install.
+Realistically, paying **$5 per month** for Railway's Hobby tier (1 GB RAM, more disk) is likely to be much cheaper than alternatives for what you get. Compared to VPS options with similar specs or managed AI agent hosting services, Railway's pricing is competitive. If you're using the agent regularly, it's probably worth the upgrade.
 
-### 3. One Project at a Time
+## What's Next
 
-You can't have the existing site clone, the new site build, and Hermes' runtime all in working state simultaneously. Our flow became:
+I'm investigating a couple of approaches to get more out of the free tier without the storage pain:
 
-1. Clone what you need
-2. Extract the data
-3. Delete the clone
-4. Install what you need next
+1. **Letting the agent create new Railway projects** for deployment tasks — each project gets its own environment, so builds don't pollute the main agent's disk.
+2. **S3 bucket deployment for static websites** — build locally (or in CI), push to S3, and serve from there. Keeps the agent's filesystem clean.
 
-It sounds obvious, but getting disciplined about cleanup is the difference between a working agent and a stuck one.
+The challenge is finding a model that balances being able to deploy and manage infrastructure effectively, without giving it *too much* power. More on that as I experiment.
 
-### 4. Push Early, Build Elsewhere
+## Bottom Line
 
-The most freeing decision was: **don't build on the server**. We started pushing source code to GitHub and running builds in CI. Railway's free tier became a thin control plane — the heavy lifting (npm install, vite builds, Astro compilation) happened in GitHub Actions, which has far more generous resources.
-
-## What I'd Do Differently
-
-If I were starting fresh on Railway free tier, I'd:
-
-1. **Set up a cron-based disk monitor** — auto-clean caches when usage exceeds 70%
-2. **Use Railway volumes** — they cost a bit more but add persistent, larger storage
-3. **Prefix every install with a cleanup** — make it a habit, not a reaction
-4. **Consider an alternative** — if your workload is heavy, Railway's $5/mo Hobby tier gives you a full GB of RAM and more disk, which is probably worth it
-
-## The Bottom Line
-
-Running Hermes Agent on Railway's free tier is **totally viable** — it's Linux, it has internet access, and it can run pretty much anything you throw at it. The constraint is disk, not compute. As long as you treat your 434 MB like the precious resource it is, and you design around it (build elsewhere, clean aggressively), it works.
-
-But if you ever hear yourself think *"I'll just npm install that real quick"* without checking `df -h` first — you haven't learned the lesson yet. I know I hadn't.
+Running Hermes Agent on Railway's free tier works well for what it is. Start with Telegram, use a cost-effective model like DeepSeek Flash 4, be mindful of storage, and offload heavy builds to CI. And if you find yourself wanting more headroom, the $5 plan is good value.
