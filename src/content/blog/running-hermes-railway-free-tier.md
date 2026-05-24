@@ -1,6 +1,6 @@
 ---
 title: "Running Hermes Agent on Railway's Free Tier: A Disk-Space Adventure"
-pubDate: 2026-05-24
+date: 2026-05-24
 description: "What we learned trying to squeeze a modern AI agent into a 434 MB box — and the tricks that kept it running."
 tags: ["hermes-agent", "devops", "railway", "hosting", "ai-agents"]
 ---
