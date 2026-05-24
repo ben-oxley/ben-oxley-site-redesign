@@ -1,7 +1,7 @@
 // Site-wide configuration
 export const SITE = {
   title: "Ben Oxley",
-  description: "Personal website and blog of Ben Oxley — cloud architecture, engineering, and side projects",
+  description: "Chartered engineer, cloud architect, and builder of things — Wayve, geospatial systems, electronics, and side projects",
   url: "https://benoxley.com",
   author: "Ben Oxley",
 };
