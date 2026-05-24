@@ -1,21 +1,151 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { SOCIAL } from "../config";
 ---
 
-<BaseLayout title="About" description="About Ben Oxley">
-  <h1>About</h1>
-  <p>
-    I'm Ben — a builder who's been around the block a few times. Sysadmin turned software
-    engineer turned whatever-it-takes-to-make-things-work. I spend my time on infrastructure,
-    tooling, automation, and the occasional hardware project.
-  </p>
-  <p>
-    When I'm not at a terminal, you'll find me tinkering with networking gear, messing
-    around with 3D printing, or working on some ill-advised weekend project that sounded
-    better on Friday night than it does on Sunday morning.
-  </p>
-  <p>
-    This site runs on <a href="https://astro.build">Astro</a> with zero tracking, zero
-    JavaScript by default, and one overengineered favicon.
-  </p>
+<BaseLayout title="About" description="About Ben Oxley — cloud technology leader, chartered engineer, builder and tinkerer">
+  <article class="post">
+    <h1>About Ben Oxley</h1>
+
+    <p>
+      Ben leads a large group of cloud, software and data engineers to develop complex
+      cloud native software solutions for consultancy clients. A certified cloud architect and a chartered
+      mechanical and mechatronics engineer for 11 years, Ben thrives in implementing technically complex
+      digital solutions with new and novel technologies for a wide range of major clients.
+    </p>
+    <p>
+      Ben enjoys understanding how things work and solving difficult problems integrating digital and physical
+      systems. He excels in diving deep to understand how things work, with
+      interest in everything from embedded electronics to geospatial data.
+    </p>
+    <p>
+      Ben also enjoys working with people to enable teams and companies to deliver to their potential. He
+      is known for a collaborative and inclusive leadership style, enabling people to develop in a
+      supportive and enthusiastic environment.
+    </p>
+    <p>
+      Outside of work, Ben enjoys 3D printing geospatial data, building electronics and mountain biking (and
+      sometimes a mixture of these).
+    </p>
+
+    <hr />
+
+    <h2>Links</h2>
+    <ul>
+      <li>Mastodon: <a href={SOCIAL.mastodon}>@boxly@hachyderm.io</a></li>
+      <li>GitHub: <a href={SOCIAL.github}>ben-oxley</a></li>
+      <li>Matrix: <a href={SOCIAL.matrix}>@boxly:matrix.org</a></li>
+      <li>Instagram: <a href={SOCIAL.instagram}>benoxley</a></li>
+      <li>𝕏 / Twitter: <a href={SOCIAL.twitter}>@benoxley</a></li>
+    </ul>
+
+    <hr />
+
+    <h2>Work</h2>
+
+    <h3>Frazer-Nash Consultancy</h3>
+    <p>
+      I work at <a href="https://www.linkedin.com/in/ben-oxley/">Frazer-Nash Consultancy</a> as the Cloud Technology
+      Group Leader. Projects include:
+    </p>
+    <ul>
+      <li>DLT enabled artefact V&V tracking framework — <a href="https://afcp.nnl.co.uk/2021/02/01/nnl-and-frazer-nash-consultancy-blockchain-project/">AFCP Article</a></li>
+      <li>DLT enabled renewables trading platform — <a href="https://www.theengineer.co.uk/content/in-depth/blockchain-demonstrator-helps-energy-companies-explore-the-potential-of-distributed-ledger-technologies/">The Engineer</a></li>
+    </ul>
+
+    <h3>University of Southampton</h3>
+    <p>
+      4th Year Group Project — A balloon launched glider with a deployable ocean buoy, drogue and satellite uplink
+    </p>
+
+    <hr />
+
+    <h2>Business</h2>
+
+    <h3>Oxley Cartography</h3>
+    <p>
+      Using high resolution LiDAR or Ordnance Survey data of the area to produce beautiful and fascinating 3D maps
+      of the terrain around where you live. Ben got interested in the detail and patterns in geospatial data and started
+      printing out landscapes to make wall art for himself and his family. Using open geospatial data, lidar, radar,
+      photogrammetry, satellite data and more, Ben curates this data into 3D models and prints them in 3D.
+    </p>
+    <ul>
+      <li><a href="https://www.etsy.com/shop/oxleycartography">Etsy Shop</a></li>
+      <li><a href="https://oxleycartography.com">oxleycartography.com</a></li>
+    </ul>
+
+    <hr />
+
+    <h2>Projects</h2>
+    <ul>
+      <li><strong>Roamlab</strong> — Portable homelab setup based on OpenWrt, SBCs, Ubiquiti, Linux,
+        Docker and Terraform. With the intention to define as much of the setup as possible as code.
+        <a href="https://github.com/ben-oxley/roamlab">GitHub</a></li>
+      <li><strong>Atlas</strong> — <a href="https://github.com/ben-oxley/atlas">GitHub</a></li>
+      <li><strong>Home monitoring</strong></li>
+      <li><strong>Vertigo2</strong> — A compact and highly capable data logging device. Its
+        variety of sensors allows users to employ the device in a wide variety of engineering, sports and science experiments.
+        <a href="https://researchinschools.org/projects/vertigo/">IRIS Website</a>
+        <a href="https://vertigo.engineering/#/instructions">Vertigo App</a></li>
+      <li><strong>Aurora nowcast visualiser</strong> — <a href="/aurora">View</a></li>
+      <li><strong>High altitude ballooning</strong> — Including STEM projects featured in
+        <a href="https://www.dailyecho.co.uk/news/10266514.cosmic-teddy-bear-floated-21-miles-into-stratosphere/">Daily Echo</a></li>
+    </ul>
+
+    <hr />
+
+    <h2>Credentials</h2>
+
+    <h3>Academic</h3>
+    <ul>
+      <li><strong>University of Southampton</strong> — Mechanical Engineering & Mechatronics, MEng(Hons) 2:1</li>
+      <li><strong>IMechE</strong> — Chartered Engineer (CEng, MIMechE, MIET)</li>
+    </ul>
+
+    <h3>Certifications</h3>
+    <ul>
+      <li>AWS Certified Solution Architect</li>
+      <li>Azure Developer Associate</li>
+      <li>BCS Intermediate certificate in Enterprise and Solution Architecture</li>
+    </ul>
+
+    <h3>Disciplines</h3>
+    <ul>
+      <li>Group and team leadership</li>
+      <li>Product Owner and Scrum Management</li>
+      <li>Cloud Architecture and Engineering</li>
+      <li>DevSecOps and Secure By Design</li>
+      <li>Software and Data Engineering</li>
+    </ul>
+
+    <h3>Skills</h3>
+    <ul>
+      <li><strong>Languages:</strong> C#, Python, JavaScript</li>
+      <li><strong>Technologies:</strong> Docker, ASP.NET, Entity Framework, FastAPI, Databases</li>
+      <li><strong>Clouds:</strong> Azure, AWS</li>
+    </ul>
+  </article>
 </BaseLayout>
+
+<style>
+  article h2 {
+    font-size: 1.4rem;
+    margin-top: 2.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+  article h3 {
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+  }
+  article ul {
+    margin-bottom: 1rem;
+  }
+  article li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+  hr {
+    margin: 2.5rem 0;
+  }
+</style>
