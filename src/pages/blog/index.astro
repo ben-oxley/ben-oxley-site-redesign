@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostCard from "../../components/PostCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout title="Blog" description="Thoughts, projects, and notes">
+  <h1>Blog</h1>
+  {posts.length === 0 && (
+    <p style="margin-top: 2rem; color: var(--text-secondary);">
+      Nothing here yet. First post coming soon.
+    </p>
+  )}
+  <section style="margin-top: 2rem;">
+    {posts.map((post) => <PostCard post={post} />)}
+  </section>
+</BaseLayout>
