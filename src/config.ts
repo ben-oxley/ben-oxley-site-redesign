@@ -1,8 +1,8 @@
 // Site-wide configuration
 export const SITE = {
   title: "Ben Oxley",
-  description: "Chartered engineer, cloud architect, and builder of things — Wayve, geospatial systems, electronics, and side projects",
-  url: "https://benoxley.com",
+  description: "Chartered engineer, cloud architect, and builder of things at the intersection of hardware, software, and geospatial data.",
+  url: "https://ben-oxley-site-redesign-production.up.railway.app",
   author: "Ben Oxley",
 };
 
