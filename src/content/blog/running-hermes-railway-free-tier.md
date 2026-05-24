@@ -17,7 +17,11 @@ Discord on the other hand gave me unexplained issues and unreliable behaviour. N
 
 Most models get pricey quickly if you're running a conversational agent that makes frequent tool calls. A single complex task can burn through thousands of tokens in API calls, error handling, and retries.
 
-That said, **DeepSeek Flash 4 has been really cost effective** — good reasoning capability for the price, and it's fast enough that the agent feels responsive. It's become my default for most day-to-day operations.
+That said, **DeepSeek V4 Flash has been really cost effective** — good reasoning capability for the price, and it's fast enough that the agent feels responsive. It's become my default for most day-to-day operations.
+
+## OpenRouter as a Backend
+
+[OpenRouter](https://openrouter.ai) makes for a great backing system for Hermes. It enables fast experimentation with the widest range of different models — you can swap between providers and models just by changing a config value, without touching any infrastructure. Need to test a new reasoning model? Try Claude on one task, GPT on another, or experiment with the latest open-weight models as they come out. The unified API means Hermes treats them all the same way, so you can find the right balance of cost, speed, and capability for your workflow.
 
 ## The Real Constraint: Storage
 
