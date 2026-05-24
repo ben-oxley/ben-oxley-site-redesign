@@ -1,6 +1,6 @@
 ---
 title: "Running Hermes Agent on Railway's Free Tier: What Works and What Doesn't"
-pubDate: 2026-05-24
+date: 2026-05-24
 description: "A practical look at running Hermes Agent on Railway's free tier — channel setup, model choices, storage limits, and where the $5 plan makes sense."
 tags: ["hermes-agent", "devops", "railway", "hosting", "ai-agents"]
 ---
