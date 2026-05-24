@@ -1,0 +1,71 @@
+---
+export interface Props {
+  class?: string;
+  width?: number;
+  height?: number;
+  variant?: "meander" | "delta" | "tributary";
+}
+
+const { class: className, width = 400, height = 120, variant = "meander" } = Astro.props;
+---
+
+{
+  variant === "meander" && (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width={width} height={height} class={className} fill="none" aria-hidden="true">
+      <!-- River body -->
+      <path d="M190 0 C190 0, 210 30, 180 50 C150 70, 130 60, 120 80 C110 100, 140 110, 160 130 C180 150, 150 170, 130 190 C120 200, 130 210, 140 200"
+            stroke="var(--river-color, #6fd2ff)" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+      <!-- River highlight -->
+      <path d="M190 0 C190 0, 210 30, 180 50 C150 70, 130 60, 120 80 C110 100, 140 110, 160 130 C180 150, 150 170, 130 190 C120 200, 130 210, 140 200"
+            stroke="var(--river-highlight, #a8e6ff)" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+      <!-- Riverbank left -->
+      <path d="M185 0 C185 5, 205 28, 175 48 C144 68, 125 58, 115 78 C105 98, 135 108, 155 128 C175 148, 145 168, 125 188 C115 198, 125 208, 135 200"
+            stroke="var(--river-bank, #b09dd4)" stroke-width="1" opacity="0.2"/>
+      <!-- Riverbank right -->
+      <path d="M195 0 C195 5, 215 32, 185 52 C156 72, 135 62, 125 82 C115 102, 145 112, 165 132 C185 152, 155 172, 135 192 C125 202, 135 212, 145 200"
+            stroke="var(--river-bank, #b09dd4)" stroke-width="1" opacity="0.2"/>
+    </svg>
+  )
+}
+{
+  variant === "delta" && (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width={width} height={height} class={className} fill="none" aria-hidden="true">
+      <!-- Main river channel -->
+      <path d="M200 0 C200 0, 220 30, 200 50 C180 70, 190 80, 200 90"
+            stroke="var(--river-color, #6fd2ff)" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+      <!-- Delta branches -->
+      <path d="M200 90 C200 90, 220 130, 240 160 C250 175, 260 190, 270 200"
+            stroke="var(--river-color, #6fd2ff)" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+      <path d="M200 90 C200 90, 195 130, 190 160 C185 180, 190 190, 195 200"
+            stroke="var(--river-color, #6fd2ff)" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+      <path d="M200 90 C200 90, 160 130, 130 160 C115 175, 100 190, 90 200"
+            stroke="var(--river-color, #6fd2ff)" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+      <path d="M200 90 C200 90, 210 130, 215 160 C220 180, 230 190, 240 200"
+            stroke="var(--river-color, #6fd2ff)" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+      <path d="M200 90 C200 90, 170 120, 155 140 C140 160, 145 180, 150 200"
+            stroke="var(--river-color, #6fd2ff)" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
+      <path d="M200 90 C200 90, 240 120, 270 140 C290 155, 310 175, 330 200"
+            stroke="var(--river-color, #6fd2ff)" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
+    </svg>
+  )
+}
+{
+  variant === "tributary" && (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width={width} height={height} class={className} fill="none" aria-hidden="true">
+      <!-- Main river -->
+      <path d="M200 0 C200 0, 220 40, 200 70 C180 100, 190 120, 200 140 C210 160, 205 180, 200 200"
+            stroke="var(--river-color, #6fd2ff)" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+      <!-- Tributary 1 -->
+      <path d="M0 60 C20 60, 60 55, 100 65 C130 72, 160 78, 200 70"
+            stroke="var(--river-color, #6fd2ff)" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+      <!-- Tributary 2 -->
+      <path d="M400 120 C370 120, 330 115, 290 125 C260 132, 230 138, 200 140"
+            stroke="var(--river-color, #6fd2ff)" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+      <!-- Tributary 3 -->
+      <path d="M0 150 C30 145, 80 140, 120 148 C160 156, 180 152, 200 140"
+            stroke="var(--river-color, #6fd2ff)" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
+      <!-- Lake at confluence -->
+      <ellipse cx="200" cy="75" rx="15" ry="10" fill="var(--river-color, #6fd2ff)" opacity="0.15"/>
+    </svg>
+  )
+}

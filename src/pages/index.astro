@@ -1,14 +1,29 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { SITE, SOCIAL } from "../config";
+import PolarBear from "../components/icons/PolarBear.astro";
+import Mountains from "../components/icons/Mountains.astro";
+import Contours from "../components/icons/Contours.astro";
+import Rivers from "../components/icons/Rivers.astro";
 ---
 
 <BaseLayout>
   <section class="home-header">
-    <h1>{SITE.title}</h1>
-    <p class="subtitle">
-      Chartered engineer, cloud architect, and builder of things at the intersection of hardware, software, and geospatial data.
-    </p>
+    <div class="hero">
+      <div class="hero-avatar">
+        <PolarBear size={140} />
+      </div>
+      <div class="hero-text">
+        <h1>{SITE.title}</h1>
+        <p class="subtitle">
+          Chartered engineer, cloud architect, and builder of things at the intersection of hardware, software, and geospatial data.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="motif-section">
+    <Mountains variant="range" width="100%" height={80} />
   </section>
 
   <section>
@@ -92,4 +107,53 @@ import { SITE, SOCIAL } from "../config";
       </a>
     </div>
   </section>
+
+  <section class="motif-section bottom-motifs">
+    <Contours density="medium" width="100%" height={80} />
+    <Rivers variant="tributary" width="100%" height={80} />
+  </section>
 </BaseLayout>
+
+<style>
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .hero-avatar {
+    flex-shrink: 0;
+  }
+
+  .hero-avatar svg {
+    --bear-body: var(--bg-card);
+    --bear-outline: var(--accent);
+  }
+
+  .hero-text h1 {
+    margin-bottom: 0.5rem;
+  }
+
+  .motif-section {
+    margin: 2rem 0;
+    opacity: 0.6;
+  }
+
+  .bottom-motifs {
+    margin-top: 3rem;
+    opacity: 0.4;
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+    }
+
+    .hero-avatar svg {
+      width: 100px;
+      height: 100px;
+    }
+  }
+</style>

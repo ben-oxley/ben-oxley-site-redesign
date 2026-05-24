@@ -1,0 +1,43 @@
+---
+export interface Props {
+  class?: string;
+  width?: number;
+  height?: number;
+  variant?: "peaks" | "range" | "single";
+}
+
+const { class: className, width = 400, height = 120, variant = "peaks" } = Astro.props;
+---
+
+{
+  variant === "peaks" && (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width={width} height={height} class={className} fill="none" aria-hidden="true">
+      <!-- Back peak -->
+      <path d="M0 120 L60 30 L100 90 L140 20 L200 120 Z" fill="var(--mountain-back, #d0bfff)" opacity="0.5"/>
+      <!-- Middle peak -->
+      <path d="M50 120 L110 45 L150 85 L230 35 L280 120 Z" fill="var(--mountain-mid, #b09dd4)" opacity="0.4"/>
+      <!-- Front peak -->
+      <path d="M120 120 L200 55 L260 95 L330 50 L380 120 Z" fill="var(--mountain-front, #786999)" opacity="0.3"/>
+    </svg>
+  )
+}
+{
+  variant === "range" && (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width={width} height={height} class={className} fill="none" aria-hidden="true">
+      <path d="M0 120 L30 70 L50 90 L80 40 L100 75 L130 25 L160 65 L190 35 L220 70 L250 45 L280 80 L310 50 L340 85 L370 60 L400 120 Z" fill="var(--mountain-range, #b09dd4)" opacity="0.35"/>
+      <path d="M0 120 L50 80 L80 105 L120 60 L160 95 L200 55 L240 90 L280 70 L320 100 L360 75 L400 120 Z" fill="var(--mountain-range-front, #786999)" opacity="0.25"/>
+    </svg>
+  )
+}
+{
+  variant === "single" && (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width={width} height={height} class={className} fill="none" aria-hidden="true">
+      <!-- Snow cap mountain -->
+      <path d="M20 200 L100 40 L180 200 Z" fill="var(--mountain-body, #b09dd4)" opacity="0.3" stroke="var(--mountain-body, #b09dd4)" stroke-width="2"/>
+      <!-- Snow cap -->
+      <path d="M85 70 L100 45 L115 70 L110 72 L100 65 L90 72 Z" fill="white" opacity="0.6"/>
+      <!-- Shadow side -->
+      <path d="M100 40 L100 200 L180 200 Z" fill="var(--mountain-shadow, #786999)" opacity="0.15"/>
+    </svg>
+  )
+}
