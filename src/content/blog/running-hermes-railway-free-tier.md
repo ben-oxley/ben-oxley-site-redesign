@@ -7,11 +7,20 @@ tags: ["hermes-agent", "devops", "railway", "hosting", "ai-agents"]
 
 I've been running [Hermes Agent](https://hermes-agent.nousresearch.com) on Railway's free tier and it's been a positive experience overall. It's entirely possible to run a capable AI agent on a free instance, but there are some constraints worth knowing about upfront.
 
+## Why Railway
+
+The main reason I chose Railway over self-hosting was **isolation**. I didn't want Hermes running on my home network or mixed in with my personal infrastructure. A separate cloud instance means:
+
+- **It's completely independent** — no dependency on my home connection, no risk of it touching other devices on my LAN, and it stays up whether I'm home or not.
+- **Fine-grained access control** — I can give it tightly-scoped API tokens (like a GitHub PAT that only has access to specific repos) without worrying about lateral movement or credential exposure to my broader network. If the agent's token gets leaked, the blast radius is contained to exactly what that token can do.
+
+Railway made this easy — spin up a new project, deploy Hermes, and it's fully isolated with no infra overhead.
+
 ## Channel Setup
 
 **Telegram is by far the easiest integration.** It just works — set up a bot, plug in the token, and you're done. The UX for sending and receiving messages is smooth, and media attachments (images, audio, files) come through natively.
 
-Discord on the other hand gave me unexplained issues and unreliable behaviour. Nothing I could pin down to a specific config problem, just intermittent failures that made it frustrating to rely on day-to-day. If you're starting fresh, I'd recommend Telegram.
+Discord was trickier. The main gotcha: using `*` as a wildcard user ID to allow everyone doesn't work — the Discord adapter doesn't treat it as a wildcard for user IDs. Once I figured out my actual Discord user ID and configured `DISCORD_ALLOWED_USERS` with that, everything became reliable. If you're hitting unexplained Discord issues, start there rather than chasing config settings.
 
 ## Model Costs
 
@@ -27,27 +36,32 @@ That said, **DeepSeek V4 Flash has been really cost effective** — good reasoni
 
 The main limit you hit on Railway's free tier is **storage** (around 434 MB). This is fine for the agent itself — Hermes is lightweight — but becomes an issue when your agent needs to `npm install`, clone repos, build projects, or work with multiple tools that have their own dependencies.
 
-Memory limits get hit occasionally too, especially when running Node.js builds or Python tools. This might have contributed to some of the unreliable behaviour I saw with Discord — hard to say for sure, but worth noting if you're planning heavy workloads.
+Memory limits get hit occasionally too, especially when running Node.js builds or Python tools. This contributed to some of the unreliable behaviour I saw with Discord and the Hermes dashboard — the dashboard would crash or not run properly under the free tier's memory constraints.
 
-## Avoid Heavy Dependency Chains
+## The Hobbyist Upgrade Changes Everything
 
-The biggest practical tip is: **avoid solutions that need large chains of dependencies**, especially with npm. If your agent needs to build a static site, deploy a web app, or run a tool with deep dependency trees, you'll fill your disk fast.
+Moving to the **Hobbyist tier ($5/month)** fixes both problems:
 
-Instead, push source code to GitHub and run builds in CI (GitHub Actions has generous free resources). The Railway instance becomes a thin control plane — perfect for orchestrating work that happens elsewhere.
+1. **Extra memory makes the Hermes dashboard rock solid** — it stopped crashing completely. Everything just runs more reliably day-to-day.
+2. **Increased storage lets you build locally** — instead of the workaround of pushing to GitHub CI for every build, the instance can now properly `npm install`, compile apps, and run build chains directly. It's around 5 GB on the Hobbyist tier — enough for most build toolchains without hitting the ceiling constantly.
 
-## Is the $5 Plan Worth It?
+These two upgrades alone make the $5 plan worthwhile if you're using the agent regularly. The free tier is great for getting started, but the Hobbyist tier is where Hermes feels like a fully capable development platform.
 
-Realistically, paying **$5 per month** for Railway's Hobby tier (1 GB RAM, more disk) is likely to be much cheaper than alternatives for what you get. Compared to VPS options with similar specs or managed AI agent hosting services, Railway's pricing is competitive. If you're using the agent regularly, it's probably worth the upgrade.
+## Avoid Heavy Dependency Chains (Free Tier)
+
+On the free tier, the biggest practical tip is: **avoid solutions that need large chains of dependencies**, especially with npm. If your agent needs to build a static site, deploy a web app, or run a tool with deep dependency trees, you'll fill your disk fast.
+
+Instead, push source code to GitHub and run builds in CI (GitHub Actions has generous free resources). The Railway instance becomes a thin control plane — perfect for orchestrating work that happens elsewhere. This limitation largely disappears on the Hobbyist tier (5 GB is enough for most builds).
 
 ## What's Next
 
-I'm investigating a couple of approaches to get more out of the free tier without the storage pain:
+With the storage and memory constraints largely solved on the Hobbyist tier, I'm exploring what the agent can do now that it has room to work:
 
 1. **Letting the agent create new Railway projects** for deployment tasks — each project gets its own environment, so builds don't pollute the main agent's disk.
-2. **S3 bucket deployment for static websites** — build locally (or in CI), push to S3, and serve from there. Keeps the agent's filesystem clean.
+2. **S3 bucket deployment for static websites** — build locally on the instance and serve from S3.
 
 The challenge is finding a model that balances being able to deploy and manage infrastructure effectively, without giving it *too much* power. More on that as I experiment.
 
 ## Bottom Line
 
-Running Hermes Agent on Railway's free tier works well for what it is. Start with Telegram, use a cost-effective model like DeepSeek Flash 4, be mindful of storage, and offload heavy builds to CI. And if you find yourself wanting more headroom, the $5 plan is good value.
+Running Hermes Agent on Railway's free tier works well for what it is. Start with Telegram, use a cost-effective model like DeepSeek Flash 4, be mindful of storage. The Hobbyist tier ($5/month) is where it really shines — the extra memory and storage turn it into a fully capable development platform.
